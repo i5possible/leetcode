@@ -1,17 +1,29 @@
 import Tree, {Comparable} from './tree';
 
 class TestObject implements Comparable<TestObject> {
-    value: number;
+    count: number;
 
     constructor(value: number) {
-        this.value = value;
+        this.count = value;
     }
 
     compareTo(other: TestObject): number {
-        if (this.value > other.value) return 1;
-        if (this.value < other.value) return -1;
+        if (this.count > other.count) return 1;
+        if (this.count < other.count) return -1;
         return 0;
     }
+}
+
+const printObjectTreeInorder = (tree: Tree<TestObject>) => {
+    const result: TestObject[] = [];
+    Tree.inorderTraversal(tree.root, result);
+    console.log(result.map(o => o.count));
+}
+
+const printObjectTreePreorder = (tree: Tree<TestObject>) => {
+    const result: TestObject[] = [];
+    Tree.preorderTraversal(tree.root, result);
+    console.log(result.map(o => o.count));
 }
 
 
@@ -133,28 +145,32 @@ describe('Tree', () => {
 
     describe('Object Tree', () => {
 
-
         it('should insert values', () => {
             const tree = buildObjectTree();
-            expect(tree.root?.value.value).toBe(5);
-            expect(tree.root?.left?.value.value).toBe(3);
-            expect(tree.root?.right?.value.value).toBe(7);
-            expect(tree.root?.left?.left?.value.value).toBe(2);
-            expect(tree.root?.left?.right?.value.value).toBe(4);
-            expect(tree.root?.right?.left?.value.value).toBe(6);
-            expect(tree.root?.right?.right?.value.value).toBe(8);
+            printObjectTreeInorder(tree);
+            printObjectTreePreorder(tree);
+            expect(tree.root?.value.count).toBe(5);
+            console.log(tree.root?.left);
+            console.log(tree.root?.right);
+            expect(tree.root?.left?.value.count).toBe(3);
+            expect(tree.root?.right?.value.count).toBe(7);
+            expect(tree.root?.left?.left?.value.count).toBe(2);
+            expect(tree.root?.left?.right?.value.count).toBe(4);
+            expect(tree.root?.right?.left?.value.count).toBe(6);
+            expect(tree.root?.right?.right?.value.count).toBe(8);
         });
 
         it('should delete values', () => {
             const tree = buildObjectTree();
 
-            expect(tree.root?.value.value).toBe(5);
-            expect(tree.root?.left?.value.value).toBe(4);
-            expect(tree.root?.right?.value.value).toBe(7);
-            expect(tree.root?.left?.left?.value.value).toBe(2);
+            tree.delete(new TestObject(3));
+            expect(tree.root?.value.count).toBe(5);
+            expect(tree.root?.left?.value.count).toBe(4);
+            expect(tree.root?.right?.value.count).toBe(7);
+            expect(tree.root?.left?.left?.value.count).toBe(2);
             expect(tree.root?.left?.right).toBe(null);
-            expect(tree.root?.right?.left?.value.value).toBe(6);
-            expect(tree.root?.right?.right?.value.value).toBe(8);
+            expect(tree.root?.right?.left?.value.count).toBe(6);
+            expect(tree.root?.right?.right?.value.count).toBe(8);
         });
 
         it('should search values', () => {

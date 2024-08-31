@@ -2,7 +2,9 @@ export interface Comparable<T> {
     compareTo(other: T): number;
 }
 
-class TreeNode<T> implements Comparable<T> {
+type NodeType<T> = Comparable<T> | string | number;
+
+class TreeNode<T extends NodeType<T>> {
     value: T;
     left: TreeNode<T> | null;
     right: TreeNode<T> | null;
@@ -14,8 +16,13 @@ class TreeNode<T> implements Comparable<T> {
     }
 
     compareTo(other: T): number {
-        if (this.value > other) return 1;
-        if (this.value < other) return -1;
+        if (typeof this.value === 'string' || typeof this.value === 'number') {
+            if (this.value > other) return 1;
+            if (this.value < other) return -1;
+        } else {
+            if (this.value.compareTo(other) > 0) return 1;
+            if (this.value.compareTo(other) < 0) return -1;
+        }
         return 0;
     }
 
@@ -36,7 +43,7 @@ class TreeNode<T> implements Comparable<T> {
     }
 }
 
-class Tree<T> {
+class Tree<T extends NodeType<T>> {
     root: TreeNode<T> | null;
 
     constructor() {
@@ -117,31 +124,31 @@ class Tree<T> {
                 current = current.right;
             }
         }
-        return current && current.compareTo(value) === 0;
+        return !!current && current.compareTo(value) === 0;
     }
 
-    static preorderTraversal<T>(node: TreeNode<T> | null, result: T[]): void {
+    static preorderTraversal<T extends NodeType<T>>(node: TreeNode<T> | null, result: T[]): void {
         if (node === null) return;
         result.push(node.value);
         this.preorderTraversal(node.left, result);
         this.preorderTraversal(node.right, result);
     }
 
-    static inorderTraversal<T>(node: TreeNode<T> | null, result: T[]): void {
+    static inorderTraversal<T extends NodeType<T>>(node: TreeNode<T> | null, result: T[]): void {
         if (node === null) return;
         this.inorderTraversal(node.left, result);
         result.push(node.value);
         this.inorderTraversal(node.right, result);
     }
 
-    static postorderTraversal<T>(node: TreeNode<T> | null, result: T[]): void {
+    static postorderTraversal<T extends NodeType<T>>(node: TreeNode<T> | null, result: T[]): void {
         if (node === null) return;
         this.postorderTraversal(node.left, result);
         this.postorderTraversal(node.right, result);
         result.push(node.value);
     }
 
-    static levelOrderTraversal<T>(node: TreeNode<T> | null, result: T[]): void {
+    static levelOrderTraversal<T extends NodeType<T>>(node: TreeNode<T> | null, result: T[]): void {
         if (node === null) return;
         const queue = [node];
         while (queue.length > 0) {
