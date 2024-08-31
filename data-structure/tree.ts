@@ -140,6 +140,21 @@ class Tree<T> {
         this.postorderTraversal(node.right, result);
         result.push(node.value);
     }
+
+    static levelOrderTraversal<T>(node: TreeNode<T> | null, result: T[]): void {
+        if (node === null) return;
+        const queue = [node];
+        while (queue.length > 0) {
+            const current = queue.shift()!;
+            result.push(current.value);
+            if (current.left !== null) {
+                queue.push(current.left);
+            }
+            if (current.right !== null) {
+                queue.push(current.right);
+            }
+        }
+    }
 }
 
 export default Tree;

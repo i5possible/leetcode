@@ -185,5 +185,12 @@ describe('Tree', () => {
             Tree.postorderTraversal(tree.root, result);
             expect(result).toEqual([2, 4, 3, 6, 8, 7, 5]);
         });
+
+        it('should traverse level order', () => {
+            const tree = buildNumberTree();
+            const result: number[] = [];
+            Tree.levelOrderTraversal(tree.root, result);
+            expect(result).toEqual([5, 3, 7, 2, 4, 6, 8]);
+        });
     });
 });
