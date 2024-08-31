@@ -119,6 +119,27 @@ class Tree<T> {
         }
         return current && current.compareTo(value) === 0;
     }
+
+    static preorderTraversal<T>(node: TreeNode<T> | null, result: T[]): void {
+        if (node === null) return;
+        result.push(node.value);
+        this.preorderTraversal(node.left, result);
+        this.preorderTraversal(node.right, result);
+    }
+
+    static inorderTraversal<T>(node: TreeNode<T> | null, result: T[]): void {
+        if (node === null) return;
+        this.inorderTraversal(node.left, result);
+        result.push(node.value);
+        this.inorderTraversal(node.right, result);
+    }
+
+    static postorderTraversal<T>(node: TreeNode<T> | null, result: T[]): void {
+        if (node === null) return;
+        this.postorderTraversal(node.left, result);
+        this.postorderTraversal(node.right, result);
+        result.push(node.value);
+    }
 }
 
 export default Tree;
