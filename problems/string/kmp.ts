@@ -8,15 +8,15 @@ const kmp = (str: string, pattern: string): number => {
     let len = 0;
     let i = 1;
     while (i < m) {
-        console.log(`len = ${len}, i = ${i}`)
+        // console.log(`len = ${len}, i = ${i}`)
         if (pattern[i] === pattern[len]) {
-            console.log(`pattern[${i}] = ${pattern[i]}, pattern[${len}] = ${pattern[len]}`);
+            // console.log(`pattern[${i}] = ${pattern[i]}, pattern[${len}] = ${pattern[len]}`);
             len++;
             lps[i] = len;
             i++;
         } else {
             if (len !== 0) {
-                console.log(`pattern[${i}] = ${pattern[i]}, pattern[${len}] = ${pattern[len]}, lps[${len - 1}] = ${lps[len - 1]}`);
+                // console.log(`pattern[${i}] = ${pattern[i]}, pattern[${len}] = ${pattern[len]}, lps[${len - 1}] = ${lps[len - 1]}`);
                 // Key of the algorithm
                 len = lps[len - 1];
             } else {
@@ -25,7 +25,7 @@ const kmp = (str: string, pattern: string): number => {
             }
         }
     }
-    console.log(lps);
+    // console.log(lps);
 
     // finish finding
     i = 0;
