@@ -24,6 +24,10 @@ type AdjacencyList = {
     [key: number]: number[];
 };
 
+type WeightedAdjacencyList = {
+    [key: number]: WeightedEdge[];
+}
+
 class Graph {
     vertices: Vertex[];
     edges: WeightedEdge[];
@@ -114,6 +118,15 @@ class Graph {
             });
         }
         return new Graph(vertices, edges);
+    }
+
+    traverseDFS(start: number, visited: boolean[]): void {
+        visited[start] = true;
+        this.edges.forEach(edge => {
+            if (edge.from === start && !visited[edge.to]) {
+                this.traverseDFS(edge.to, visited);
+            }
+        });
     }
 }
 
