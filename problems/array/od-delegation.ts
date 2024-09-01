@@ -54,20 +54,25 @@ const delegation1 = (input: number[]): number => {
 
 // 2. 尝试分类计算
 const delegation2 = (input: number[]): number => {
+    // 2, 5, 2, 2
     let [x, y, nx, ny] = input;
     let minX = Math.floor(nx / (1 - 1 / x));
-    let onlyYIfMinX = Math.floor(minX / y) - Math.floor(minX / (x * y));
+    let onlyYIfMinX = Math.floor(minX / x) - Math.floor(minX / (x * y));
     let minY = Math.floor(ny / (1 - 1 / y));
-    let onlyXIfMinY = Math.floor(minY / x - minY / (x * y));
+    let onlyXIfMinY = Math.floor(minY / y - Math.floor(minY / (x * y)));
 
     // 检查 onlyX 与 nx 的关系
-    if (onlyXIfMinY >= nx) {
+    if (onlyXIfMinY > nx) {
         return minY % y === 0 ? minY - 1: minY;
+    } else if (onlyXIfMinY === nx) {
+        return minY;
     }
 
     // 检查 onlyY 与 ny 的关系
-    if (onlyYIfMinX >= ny) {
+    if (onlyYIfMinX > ny) {
         return minX % x === 0 ? minX - 1: minX;
+    } else if (onlyYIfMinX === ny) {
+        return minX;
     }
 
     // 找到根据 nx 与 ny 计算出最小 k 的结果中较大的一个，如 nx
