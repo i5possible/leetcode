@@ -27,18 +27,17 @@ const gcd = (a: number, b: number): number => {
 }
 
 const lcm = (a: number, b: number): number => {
-    return a * b;
+    return a * b / gcd(a, b);
 }
 
 // 1. 二分法查找
 export const delegation1 = (input: number[]): number => {
     let left = 1;
     let right = 10000000000;
-    let mid = Math.floor((left + right) / 2);
     let [x, y, nx, ny] = input;
     let lcmXY = lcm(x, y);
     while (left < right) {
-        mid = Math.floor((left + right) / 2);
+        const mid = Math.floor((left + right) / 2);
         let onlyX = Math.floor(mid / y) - Math.floor(mid / lcmXY);
         let onlyY = Math.floor(mid / x) - Math.floor(mid / lcmXY);
         let common = mid - Math.floor(mid / x) - Math.floor(mid / y) + Math.floor(mid / lcmXY);
@@ -48,7 +47,7 @@ export const delegation1 = (input: number[]): number => {
             left = mid + 1;
         }
     }
-    return mid;
+    return left;
 }
 
 // 2. 尝试分类计算
@@ -90,7 +89,7 @@ export const delegation2 = (input: number[]): number => {
 }
 
 const delegation = (input: number[]): number => {
-    return delegation2(input);
+    return delegation1(input);
 }
 
 export default delegation;

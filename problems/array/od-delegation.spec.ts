@@ -28,13 +28,13 @@ describe('Od delegation', () => {
     it('should return 149', () => {
         const input = [3, 4, 100, 38];
         const result = delegation(input);
-        expect(result).toBe(149);
+        expect(result).toBe(150);
     });
 
     it('should return 150', () => {
         const input = [3, 4, 100, 39];
         const result = delegation(input);
-        expect(result).toBe(150);
+        expect(result).toBe(151);
     });
 
     it('should return 163', () => {
@@ -43,10 +43,10 @@ describe('Od delegation', () => {
         expect(result).toBe(163);
     });
 
-    it('should return 1163', () => {
+    it('should return 207', () => {
         const input = [3, 4, 100, 90];
         const result = delegation(input);
-        expect(result).toBe(206);
+        expect(result).toBe(207);
     });
 
     it('should return 133', () => {
@@ -70,7 +70,7 @@ describe('Od delegation', () => {
     it('should return 1783979038', () => {
         const input = [2, 3, 862079849, 624569351];
         const result = delegation(input);
-        expect(result).toBe(1783979038);
+        expect(result).toBe(1783979039);
     });
 
     xit('should return 993', () => {
