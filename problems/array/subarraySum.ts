@@ -34,4 +34,4 @@ const subarraySumBruteForce = function(nums, k) {
     return count;
 };
 
-export default subarraySumBruteForce;
+export default subarraySum;
