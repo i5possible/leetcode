@@ -191,6 +191,29 @@ class Tree<T extends NodeType<T>> {
         if (node === null) return 0;
         return Math.max(this.maxDepth(node.left), this.maxDepth(node.right)) + 1;
     }
+
+    static maxDepthIterative<T extends NodeType<T>>(root: TreeNode<T> | null): number {
+        // BFS: Level Order Traversal
+        if (!root) {
+            return 0;
+        }
+        let depth = 0;
+        const queue = [root];
+        while (queue.length) {
+            let size = queue.length;
+            while (size--) {
+                const current = queue.shift()!;
+                if (current.left) {
+                    queue.push(current.left);
+                }
+                if (current.right) {
+                    queue.push(current.right);
+                }
+            }
+            depth++;
+        }
+        return depth;
+    }
 }
 
 export default Tree;
