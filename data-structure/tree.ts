@@ -201,6 +201,7 @@ class Tree<T extends NodeType<T>> {
         const queue = [root];
         while (queue.length) {
             let size = queue.length;
+            // iterate through the current level
             while (size--) {
                 const current = queue.shift()!;
                 if (current.left) {
@@ -210,9 +211,61 @@ class Tree<T extends NodeType<T>> {
                     queue.push(current.right);
                 }
             }
+            // process current node
             depth++;
         }
         return depth;
+    }
+
+    static invertTree<T extends NodeType<T>>(root: TreeNode<T> | null): TreeNode<T> | null {
+        if (!root) {
+            return null;
+        }
+        const temp = root.left;
+        root.left = Tree.invertTree(root.right);
+        root.right = Tree.invertTree(temp);
+        return root;
+    }
+
+    static invertTreeIterative<T extends NodeType<T>>(root: TreeNode<T> | null): TreeNode<T> | null {
+        if (!root) {
+            return null;
+        }
+        const queue = [root];
+        while (queue.length) {
+            const current = queue.shift()!;
+
+            // process current node
+            const temp = current.left;
+            current.left = current.right;
+            current.right = temp;
+
+            if (current.left) {
+                queue.push(current.left);
+            }
+            if (current.right) {
+                queue.push(current.right);
+            }
+        }
+        return root;
+    }
+
+    static bfsTemplate<T extends NodeType<T>>(root: TreeNode<T> | null): void {
+        if (!root) {
+            return;
+        }
+        const queue = [root];
+        while (queue.length) {
+            const current = queue.shift()!;
+            // process current node
+            // ...
+            if (current.left) {
+                queue.push(current.left);
+            }
+            if (current.right) {
+                queue.push(current.right);
+            }
+        }
     }
 }
 
