@@ -186,6 +186,11 @@ class Tree<T extends NodeType<T>> {
             }
         }
     }
+
+    static maxDepth<T extends NodeType<T>>(node: TreeNode<T> | null): number {
+        if (node === null) return 0;
+        return Math.max(this.maxDepth(node.left), this.maxDepth(node.right)) + 1;
+    }
 }
 
 export default Tree;
