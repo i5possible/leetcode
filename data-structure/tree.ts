@@ -141,6 +141,30 @@ class Tree<T extends NodeType<T>> {
         this.inorderTraversal(node.right, result);
     }
 
+    static inorderTraversalIterative<T extends NodeType<T>>(root: TreeNode<T> | null): number[] {
+        if (!root) {
+            return [];
+        }
+        const result = [];
+        let current = root;
+        let parents = [];
+        // stack is not empty or current is not null
+        while (current || parents.length) {
+            // recursively visit the left most child
+            while (current) {
+                parents.push(current);
+                current = current.left;
+            }
+            // back to the parent node
+            current = parents.pop();
+            // visit the node
+            result.push(current.value);
+            // visit the right child
+            current = current.right;
+        }
+        return result;
+    };
+
     static postorderTraversal<T extends NodeType<T>>(node: TreeNode<T> | null, result: T[]): void {
         if (node === null) return;
         this.postorderTraversal(node.left, result);
