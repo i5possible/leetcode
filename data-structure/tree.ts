@@ -267,6 +267,42 @@ class Tree<T extends NodeType<T>> {
             }
         }
     }
+
+    static isSymmetric<T extends NodeType<T>>(root: TreeNode<T> | null): boolean {
+        if (!root) {
+            return true;
+        }
+        const isMirror = (left: TreeNode<T> | null, right: TreeNode<T> | null): boolean => {
+            if (!left && !right) {
+                return true;
+            }
+            if (!left || !right) {
+                return false;
+            }
+            return left.value === right.value && isMirror(left.left, right.right) && isMirror(left.right, right.left);
+        }
+        return isMirror(root.left, root.right);
+    }
+
+    static isSymmetricIterative<T extends NodeType<T>>(root: TreeNode<T> | null): boolean {
+        if (!root) {
+            return true;
+        }
+        const queue = [root.left, root.right];
+        while (queue.length) {
+            const left = queue.shift()!;
+            const right = queue.shift()!;
+            if (!left && !right) {
+                continue;
+            }
+            if (!left || !right || left.value !== right.value) {
+                return false;
+            }
+            queue.push(left.left, right.right);
+            queue.push(left.right, right.left);
+        }
+        return true;
+    }
 }
 
 export default Tree;
