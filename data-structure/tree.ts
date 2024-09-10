@@ -386,6 +386,28 @@ class Tree<T extends NodeType<T>> {
         }
         return root;
     }
+
+    static kthSmallest<T extends NodeType<T>> (root: TreeNode<T> | null, k: number): T  {
+        let count = 0;
+        let current = root;
+        let stack: TreeNode<T>[] = [];
+        // inorderTraverse
+        while (current || stack.length) {
+            while (current) {
+                stack.push(current);
+                current = current.left;
+            }
+            current = stack.pop();
+            // core logic
+            count++;
+            if (count === k) {
+                return current.value;
+            }
+
+            current = current.right;
+        }
+        return null;
+    };
 }
 
 export default Tree;
