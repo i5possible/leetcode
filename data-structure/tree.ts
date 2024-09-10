@@ -303,6 +303,45 @@ class Tree<T extends NodeType<T>> {
         }
         return true;
     }
+
+    static diameterOfBinaryTree<T extends NodeType<T>>(root: TreeNode<T> | null): number {
+        let diameter = 0;
+        const depth = (node: TreeNode<T> | null): number => {
+            if (!node) {
+                return 0;
+            }
+            const left = depth(node.left);
+            const right = depth(node.right);
+            diameter = Math.max(diameter, left + right);
+            return Math.max(left, right) + 1;
+        }
+        depth(root);
+        return diameter;
+    }
+    static diameterOfBinaryTreeIterative<T extends NodeType<T>>(root: TreeNode<T> | null): number {
+        let diameter = 0;
+        const stack = [];
+        const depth = new Map();
+        stack.push(root);
+        while (stack.length) {
+            const node = stack[stack.length - 1];
+            if (node.left && !depth.has(node.left)) {
+                // has left and it's not visited yet
+                stack.push(node.left);
+            } else if (node.right && !depth.has(node.right)) {
+                // has right and it's not visited yet
+                stack.push(node.right);
+            } else {
+                // either left/right node is null or both are visited
+                const left = depth.get(node.left) || 0;
+                const right = depth.get(node.right) || 0;
+                diameter = Math.max(diameter, left + right);
+                depth.set(node, Math.max(left, right) + 1);
+                stack.pop();
+            }
+        }
+        return diameter;
+    }
 }
 
 export default Tree;
