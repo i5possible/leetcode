@@ -342,6 +342,50 @@ class Tree<T extends NodeType<T>> {
         }
         return diameter;
     }
+
+    static sortedArrayToBST<T extends NodeType<T>>(nums: T[]): TreeNode<T> | null {
+        const buildTree = (left: number, right: number): TreeNode<T> | null => {
+            if (left > right) {
+                return null;
+            }
+            const mid = Math.floor(left + (right - left) / 2);
+            const node = new TreeNode(nums[mid]);
+            node.left = buildTree(left, mid - 1);
+            node.right = buildTree(mid + 1, right);
+            return node;
+        }
+        return buildTree(0, nums.length - 1);
+    }
+
+    static sortedArrayToBSTIterative<T extends NodeType<T>>(nums: T[]): TreeNode<T> | null {
+        if (!nums.length) {
+            return null;
+        }
+        const stack = [];
+        const root = new TreeNode(null);
+        stack.push(root);
+        const indexStack = [0, nums.length - 1];
+        while (stack.length) {
+            const node = stack.pop()!;
+            const right = indexStack.pop()!;
+            const left = indexStack.pop()!;
+            const mid = left + Math.floor((right - left) / 2);
+            node.value = nums[mid];
+            if (left <= mid - 1) {
+                node.left = new TreeNode(null);
+                stack.push(node.left);
+                indexStack.push(left);
+                indexStack.push(mid - 1);
+            }
+            if (mid + 1 <= right) {
+                node.right = new TreeNode(null);
+                stack.push(node.right);
+                indexStack.push(mid + 1);
+                indexStack.push(right);
+            }
+        }
+        return root;
+    }
 }
 
 export default Tree;
