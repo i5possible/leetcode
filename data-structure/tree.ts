@@ -387,6 +387,7 @@ class Tree<T extends NodeType<T>> {
         return root;
     }
 
+    // https://leetcode.cn/problems/kth-smallest-element-in-a-bst
     static kthSmallest<T extends NodeType<T>> (root: TreeNode<T> | null, k: number): T  {
         let count = 0;
         let current = root;
@@ -408,6 +409,31 @@ class Tree<T extends NodeType<T>> {
         }
         return null;
     };
+
+    // https://leetcode.cn/problems/binary-tree-right-side-view
+    static rightSideView<T extends NodeType<T>>(root: TreeNode<T> | null): T[] {
+        if (!root) {
+            return [];
+        }
+        const result = [];
+        let queue = [root];
+        while (queue.length) {
+            let size = queue.length;
+            while (size--) {
+                const current = queue.shift()!;
+                if (size === 0) {
+                    result.push(current.value);
+                }
+                if (current.left) {
+                    queue.push(current.left);
+                }
+                if (current.right) {
+                    queue.push(current.right);
+                }
+            }
+        }
+        return result
+    }
 }
 
 export default Tree;
