@@ -134,6 +134,25 @@ class Tree<T extends NodeType<T>> {
         this.preorderTraversal(node.right, result);
     }
 
+    static preorderTraversalIterative<T extends NodeType<T>>(root: TreeNode<T> | null): number[] {
+        if (!root) {
+            return [];
+        }
+        const result = [];
+        const stack = [root];
+        while (stack.length) {
+            const current = stack.pop()!;
+            result.push(current.value);
+            if (current.right) {
+                stack.push(current.right);
+            }
+            if (current.left) {
+                stack.push(current.left);
+            }
+        }
+        return result;
+    }
+
     static inorderTraversal<T extends NodeType<T>>(node: TreeNode<T> | null, result: T[]): void {
         if (node === null) return;
         this.inorderTraversal(node.left, result);
@@ -170,6 +189,32 @@ class Tree<T extends NodeType<T>> {
         this.postorderTraversal(node.left, result);
         this.postorderTraversal(node.right, result);
         result.push(node.value);
+    }
+
+    static postorderTraversalIterative<T extends NodeType<T>>(root: TreeNode<T> | null): number[] {
+        if (!root) {
+            return [];
+        }
+        const result = [];
+        const stack = [root];
+        const output = [];
+
+        // preorder traversal from right to left
+        while (stack.length) {
+            const current = stack.pop()!;
+            output.push(current.value);
+            if (current.left) {
+                stack.push(current.left);
+            }
+            if (current.right) {
+                stack.push(current.right);
+            }
+        }
+        // reverse the output
+        while (output.length) {
+            result.push(output.pop());
+        }
+        return result;
     }
 
     static levelOrderTraversal<T extends NodeType<T>>(node: TreeNode<T> | null, result: T[]): void {
