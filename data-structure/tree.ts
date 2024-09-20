@@ -479,6 +479,29 @@ class Tree<T extends NodeType<T>> {
         }
         return result
     }
+
+    // https://leetcode.cn/problems/flatten-binary-tree-to-linked-list
+    static flattenToRightOnlyLinkedList<T extends NodeType<T>>(root: TreeNode<T> | null): void {
+        if (!root) {
+            return;
+        }
+        let previous = null;
+        let stack = [];
+        while (stack.length > 0) {
+            const current = stack.pop();
+            if (previous !== null) {
+                previous.left = null
+                previous.right = current
+            }
+            if (current.right !== null) {
+                stack.push(current.right)
+            }
+            if (current.left !== null) {
+                stack.push(current.left)
+            }
+            previous = current
+        }
+    }
 }
 
 export default Tree;
